@@ -1,11 +1,11 @@
 <script>
 	import Day from './components/Day.svelte';
 
-	/** @function getDays
-	 *  @param {number} length - number of day to get
-	 *  @param {Object} dateObj - new Date()
-	 *  @param {number} [index=1] - no reason to fuck with
-	 *  @return {Object[]} - array of days */
+	/** @function getDays - recursively return an array days starting on dateObj.
+	 *  @param {number} length - number of daysto get.
+	 *  @param {Object} dateObj - Date object of day to start on.
+	 *  @param {number} [index=1] - no reason to fuck with.
+	 *  @return {Object[]} - array of days following each other. */
 	const getDays = (length, dateObj, index = 1) => {
 		if (index < length)
 			return [dateObj].concat(getDays(
