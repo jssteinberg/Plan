@@ -2,7 +2,7 @@
 
 *A plan without a plan*
 
-A colorful calendar of the next month. [Here, it's live](https://plan.johan.land/).
+A colorful calendar of the next month. [Here, it's live](https://plan.johan.land/) (in Norwegian).
 
 
 ## Get started
