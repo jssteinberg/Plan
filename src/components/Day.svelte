@@ -64,33 +64,29 @@
 	section {
 		position: relative;
 		padding: var(--space, 1rem);
+		/* BG for month */
 		background: hsla(var(--h-month),100%,50%,15%);
 	}
 
 	section.today {
-		box-shadow: inset 0 0 0 calc(var(--space,1rem) / 3) var(--fg-invert, hsla(0,0%,100%,87.5%));
+		box-shadow: inset 0 0 0 calc(var(--space,1rem) / 3) var(--fg, black);
 	}
 
 	section::before {
 		content: '';
 		position: absolute;
 		top: 0; right: 0; bottom: 0; left: 0;
-		background: var(--fg-invert, white);
-		z-index: -2;
+		z-index: -1;
+		/* BG unique day color shade */
+		background: hsla(var(--h-day),100%,75%,15%);
 	}
 
-	/* Darker shade based on index */
 	section::after {
 		content: '';
 		position: absolute;
 		top: 0; right: 0; bottom: 0; left: 0;
-		/* background: linear-gradient( */
-		/* 	to right bottom, */
-		/* 	hsla(0,0%,50%,calc(1% * var(--index-day))), */
-		/* 	hsla(0,0%,50%,calc(1% * (var(--index-day) + 1))) */
-		/* ); */
-		background: hsla(var(--h-day),100%,calc(100% - 2% * var(--index-day)),5%);
-		z-index: -1;
+		z-index: -2;
+		background: var(--fg-i, white);
 	}
 
 	h2 {

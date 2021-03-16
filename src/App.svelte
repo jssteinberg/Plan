@@ -40,7 +40,7 @@
 		--space: calc(1rem * (1 + var(--added-lead)));
 		--font-system: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 		--fg: hsl(0,0%,5%);
-		--fg-invert: white;
+		--fg-i: white;
 
 		background: var(--fg);
 	}
@@ -48,7 +48,7 @@
 	@media (prefers-color-scheme: dark) {
 		:root {
 			--fg: hsl(0,0%,90%);
-			--fg-invert: hsl(0,0%,10%);
+			--fg-i: hsl(0,0%,10%);
 			background: var(--fg-invert);
 		}
 	}
