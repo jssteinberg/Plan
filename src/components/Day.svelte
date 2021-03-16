@@ -28,16 +28,15 @@
 		weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
 	};
 
+	const hueMonth = getH(dateObj.toLocaleDateString('en', {month:'long', year:'numeric'}));
 	let displayDate = dateObj.toLocaleDateString(localeOpt);
 	let dayClasses = `display-day-${index} day-${dateObj.getDay()} month-${dateObj.getMonth()}`;
-	let hueMonth = getH(dateObj.toLocaleDateString());
 	let time;
 	let clock;
 
 	// if locales, update certain variables
 	if (locales) {
 		displayDate = dateObj.toLocaleDateString(locales, localeOpt);
-		hueMonth = getH(dateObj.toLocaleDateString(locales, {month:'long', year:'numeric'}));
 	}
 
 	if (isToday(dateObj)) {
@@ -49,7 +48,7 @@
 	}
 </script>
 
-<section class="{dayClasses}" style="--h-day: {getH(displayDate)};--h-month:{hueMonth};--index-day:{index};">
+<section class="{dayClasses}" style="--h-day:{getH(displayDate)};--h-month:{hueMonth};--index-day:{index};">
 	<h2 class="text-h3">
 		{#each displayDate.split(' ') as word}
 			<span>{word}</span>
