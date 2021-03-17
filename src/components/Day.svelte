@@ -33,17 +33,21 @@
 				clearInterval(clock);
 				// dispatch event of day change, or something in module or store...
 				todayObj.set(new Date());
-				dayClasses = getDayClasses(0);
+				dayClasses = getDayClasses(dateObj, 0);
 			}
 		}, 1000);
 	};
-	const getDayClasses = (index) => {
+	/** @function getDayClasses - Get classes for Day.
+	 *  @param {Object} dateObj - JS Date object.
+	 *  @param {number} [index=0] - index for .display-day-
+	 *  @return {string} - string of classes. */
+	const getDayClasses = (dateObj, index = 0) => {
 		return `display-day-${index} day-${dateObj.getDay()} month-${dateObj.getMonth()}`;
 	};
 
 	const hueMonth = getH(dateObj.toLocaleDateString('en', {month:'long', year:'numeric'}));
 	let displayDate = dateObj.toLocaleDateString();
-	let dayClasses = getDayClasses(index);
+	let dayClasses = getDayClasses(dateObj, index);
 	let time;
 	let clock;
 
