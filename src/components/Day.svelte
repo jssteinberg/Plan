@@ -4,46 +4,13 @@
 </script>
 
 <script>
+	import { isToday, getHue as getH } from '../utils.js';
 	export let dateObj;
 	export let locales = null;
 	export let index = 0;
 
-	/** @function isToday
-	 *  @param {object} someDate - Date object
-	 *  @return {boolean} */
-	const isToday = (someDate) => {
-		const today = new Date();
-		return someDate.getDate() == today.getDate() &&
-			someDate.getMonth() == today.getMonth() &&
-			someDate.getFullYear() == today.getFullYear();
-	};
-	/** @function getH - get hue based string.
-	 *  @param {string} str
-	 *  @return {number} - hue for hsl(a) */
-	const getH = str => {
-		let hash = 0;
-		for (let i = 0; i < str.length; i++) {
-			hash = str.charCodeAt(i) + ((hash << 5) - hash);
-		}
-		let h = ~~(360 * hash);
-		return h % 360;
-	};
-
-	const hueMonth = getH(dateObj.toLocaleDateString('en', {month:'long', year:'numeric'}));
-	let displayDate = dateObj.toLocaleDateString();
-	let dayClasses = `display-day-${index} day-${dateObj.getDay()} month-${dateObj.getMonth()}`;
-	let time;
-	let clock;
-
-	// if locales, update certain variables
-	if (locales) {
-		displayDate = dateObj.toLocaleDateString(locales, {
-			weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-		});
-	}
-
-	// if Day is today
-	if (isToday(dateObj)) {
+	/** @function initToday - Side effects! Is only run for Day that's today. */
+	const initToday = () => {
 		const getTime = (dateObj, locales) => {
 			const today = new Date();
 			if (!isToday(dateObj)) return undefined;
@@ -63,10 +30,36 @@
 		clock = setInterval(() => {
 			time = getTime(dateObj, locales);
 			if (typeof time === 'undefined') {
+				clearInterval(clock);
 				// dispatch event of day change, or something in module or store...
+				todayObj.set(new Date());
+				dayClasses = getDayClasses(0);
 			}
 		}, 1000);
+	};
+	const getDayClasses = (index) => {
+		return `display-day-${index} day-${dateObj.getDay()} month-${dateObj.getMonth()}`;
+	};
+
+	const hueMonth = getH(dateObj.toLocaleDateString('en', {month:'long', year:'numeric'}));
+	let displayDate = dateObj.toLocaleDateString();
+	let dayClasses = getDayClasses(index);
+	let time;
+	let clock;
+
+	// if locales, update certain variables
+	if (locales) {
+		displayDate = dateObj.toLocaleDateString(locales, {
+			weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+		});
 	}
+
+	todayObj.subscribe(() => {
+		// if Day is today
+		if (isToday(dateObj)) {
+			initToday();
+		}
+	});
 </script>
 
 <section class="{dayClasses}" style="--h-day:{getH(displayDate)};--h-month:{hueMonth};--index-day:{index};">
@@ -87,10 +80,6 @@
 		/* BG for month */
 		background: hsla(var(--h-month),100%,50%,15%);
 	}
-
-	/* section:is(.day-0,.day-6) { */
-	/* 	background: hsla(var(--h-month),100%,75%,100%); */
-	/* } */
 
 	section.today {
 		box-shadow: inset calc(var(--space,1rem) * .4) calc(var(--space,1rem) * .5) hsla(var(--h-month, 0),30%,50%),
