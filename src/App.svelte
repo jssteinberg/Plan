@@ -42,7 +42,7 @@
 		--fg: hsl(0,0%,2.5%);
 		--fg-i: white;
 
-		background: linear-gradient(hsl(0,0%,10%),hsl(0,0%,2.5%));
+		background: linear-gradient(hsl(0,0%,10%),hsl(0,0%,2.5%)), hsl(0,0%,2.5%);
 	}
 
 	@media (prefers-color-scheme: dark) {
