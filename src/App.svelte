@@ -58,8 +58,7 @@
 	}
 
 	body {
-		margin: 0 auto;
-		max-width: 90vw;
+		margin: 0;
 		font-family: var(--font-system);
 		color: var(--fg);
 	}
