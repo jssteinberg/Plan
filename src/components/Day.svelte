@@ -1,3 +1,7 @@
+<script context="module">
+
+</script>
+
 <script>
 	export let dateObj;
 	export let locales = null;
@@ -24,26 +28,39 @@
 		return h % 360;
 	};
 
-	const localeOpt = {
-		weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-	};
-
 	const hueMonth = getH(dateObj.toLocaleDateString('en', {month:'long', year:'numeric'}));
-	let displayDate = dateObj.toLocaleDateString(localeOpt);
+	let displayDate = dateObj.toLocaleDateString();
 	let dayClasses = `display-day-${index} day-${dateObj.getDay()} month-${dateObj.getMonth()}`;
 	let time;
 	let clock;
 
 	// if locales, update certain variables
 	if (locales) {
-		displayDate = dateObj.toLocaleDateString(locales, localeOpt);
+		displayDate = dateObj.toLocaleDateString(locales, {
+			weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+		});
 	}
 
+	// if Day is today
 	if (isToday(dateObj)) {
+		const getTime = (dateObj, locales) => {
+			const today = new Date();
+			if (!isToday(dateObj)) return undefined;
+			if (typeof locales === 'string' && locales.length)
+				return today.toLocaleTimeString(locales);
+			else
+				return today.toLocaleTimeString();
+		};
+
 		dayClasses += ' today';
-		time = new Date().toLocaleTimeString(locales);
+		time = getTime(dateObj, locales);
+
+		// tick tock clock
 		clock = setInterval(() => {
-			time = new Date().toLocaleTimeString(locales);
+			time = getTime(dateObj, locales);
+			if (typeof time === 'undefined') {
+				// dispatch event of day change, or something in module or store...
+			}
 		}, 1000);
 	}
 </script>
@@ -97,6 +114,10 @@
 	h2 {
 		font-weight: 500;
 		/* color: hsl(var(--h-day),100%,25%); */
+	}
+
+	.today h2 {
+		font-weight: bold;
 	}
 
 	section:is(.day-0,.day-6) h2 {

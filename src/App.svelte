@@ -43,6 +43,7 @@
 		--fg-i: white;
 
 		background: linear-gradient(hsl(0,0%,10%),hsl(0,0%,2.5%)), hsl(0,0%,2.5%);
+		min-height: 100vh;
 	}
 
 	@media (prefers-color-scheme: dark) {
