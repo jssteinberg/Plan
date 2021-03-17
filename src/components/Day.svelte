@@ -77,6 +77,11 @@
 </section>
 
 <style>
+	:global(:root) {
+		/* --root-bg: var(--black); */
+		--root-bg-top: hsla(var(--h-month),100%,50%,15%);
+	}
+
 	section {
 		position: relative;
 		padding: var(--space, 1rem);

@@ -39,17 +39,20 @@
 	:root {
 		--space: calc(1rem * (1 + var(--added-lead)));
 		--font-system: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-		--fg: hsl(0,0%,2.5%);
+		--black: hsl(0,0%,2.5%);
+		--black-2: hsl(0,0%,10%);
+		--fg: var(--black);
 		--fg-i: white;
-
-		background: linear-gradient(hsl(0,0%,10%),hsl(0,0%,2.5%)), hsl(0,0%,2.5%);
+		--root-bg: var(--black);
+		--root-bg-top: var(--black-2);
+		background: linear-gradient(var(--root-bg-top), var(--root-bg)), var(--root-bg);
 		min-height: 100vh;
 	}
 
 	@media (prefers-color-scheme: dark) {
 		:root {
 			--fg: hsl(0,0%,95%);
-			--fg-i: hsl(0,0%,10%);
+			--fg-i: var(--black-2);
 		}
 	}
 
@@ -63,6 +66,8 @@
 		display: grid;
 		/* Use ch or ex for relative to font-family */
 		grid-template-columns: repeat(var(--cols, 1), 1fr);
+		background: linear-gradient(hsl(0,0%,10%),hsl(0,0%,2.5%)), hsl(0,0%,2.5%);
+		min-height: 100vh;
 	}
 
 	@media (min-width: 600px) { main { --cols: 3; } }
