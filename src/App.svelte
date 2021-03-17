@@ -22,9 +22,11 @@
 </script>
 
 <main>
-	{#each days as day,i}
-		<Day dateObj="{day}" locales="no" index="{i}" />
-	{/each}
+	<div class="days-wrapper">
+		{#each days as day,i}
+			<Day dateObj="{day}" locales="no" index="{i}" />
+		{/each}
+	</div>
 </main>
 
 <style global>
@@ -43,9 +45,7 @@
 		--black-2: hsl(0,0%,10%);
 		--fg: var(--black);
 		--fg-i: white;
-		--root-bg: var(--black);
-		--root-bg-top: var(--black-2);
-		background: linear-gradient(var(--root-bg-top), var(--root-bg)), var(--root-bg);
+		background: hsl(var(--h-today,0),45%,45%);
 		min-height: 100vh;
 	}
 
@@ -63,11 +63,17 @@
 	}
 
 	main {
+		/* Days further down gets a subtle gradually darker bg */
+		background: linear-gradient(var(--black-2),var(--black));
+		min-height: 100vh;
+	}
+
+	.days-wrapper {
 		display: grid;
 		/* Use ch or ex for relative to font-family */
 		grid-template-columns: repeat(var(--cols, 1), 1fr);
-		background: linear-gradient(hsl(0,0%,10%),hsl(0,0%,2.5%)), hsl(0,0%,2.5%);
-		min-height: 100vh;
+		position: relative;
+		z-index: 2;
 	}
 
 	@media (min-width: 600px) { main { --cols: 3; } }
