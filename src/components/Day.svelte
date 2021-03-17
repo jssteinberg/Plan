@@ -54,6 +54,7 @@
 		};
 
 		document.documentElement.style.setProperty('--h-today', getH(displayDate));
+		document.documentElement.style.setProperty('--h-month', hueMonth);
 
 		dayClasses += ' today';
 		time = getTime(dateObj, locales);
@@ -92,8 +93,8 @@
 	/* } */
 
 	section.today {
-		box-shadow: inset calc(var(--space,1rem) * .375) calc(var(--space,1rem) * .5) var(--fg, black),
-		            inset calc(var(--space,1rem) * -.375) calc(var(--space,1rem) * -.5) var(--fg, black);
+		box-shadow: inset calc(var(--space,1rem) * .4) calc(var(--space,1rem) * .5) hsla(var(--h-month, 0),30%,50%),
+		            inset calc(var(--space,1rem) * -.4) calc(var(--space,1rem) * -.5) hsla(var(--h-month, 0),30%,50%);
 	}
 
 	section:not(:is(.day-0,.day-6))::before {
@@ -123,13 +124,13 @@
 		font-weight: bold;
 	}
 
-	section:is(.day-0,.day-6) h2 {
+	section:is(.day-0,.day-6):not(.today) h2 {
 		color: hsl(var(--h-month),45%,45%);
 		font-weight: bold;
 	}
 
 	section.display-day-0 h2 {
-		color: gray;
+		color: hsl(var(--h-month),5%,45%);
 	}
 
 	span:first-child {

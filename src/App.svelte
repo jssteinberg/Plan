@@ -45,7 +45,8 @@
 		--black-2: hsl(0,0%,10%);
 		--fg: var(--black);
 		--fg-i: white;
-		background: hsl(var(--h-today,0),45%,45%);
+		--root-bg: hsl(var(--h-month,0),20%,10%);
+		background: var(--root-bg);
 		min-height: 100vh;
 	}
 
@@ -57,14 +58,15 @@
 	}
 
 	body {
-		margin: 0;
+		margin: 0 auto;
+		max-width: 90vw;
 		font-family: var(--font-system);
 		color: var(--fg);
 	}
 
 	main {
 		/* Days further down gets a subtle gradually darker bg */
-		background: linear-gradient(var(--black-2),var(--black));
+		background: linear-gradient(var(--root-bg),var(--black));
 		min-height: 100vh;
 	}
 
