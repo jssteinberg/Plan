@@ -1,22 +1,7 @@
 <script>
 	import Day from './components/Day.svelte';
+	import {getListOfDays as getDays} from './utils.js';
 
-	/** @function getDays - recursively return an array days starting on dateObj.
-	 *  @param {number} length - number of daysto get.
-	 *  @param {Object} dateObj - Date object of day to start on.
-	 *  @param {number} [index=1] - no reason to fuck with.
-	 *  @return {Object[]} - array of days following each other. */
-	const getDays = (length, dateObj, index = 1) => {
-		if (index < length)
-			return [dateObj].concat(getDays(
-				length,
-				// get day after current
-				new Date(dateObj.getTime() + (24 * 60 * 60 * 1000)),
-				index + 1
-			));
-		else
-			return [dateObj];
-	};
 	// Get days, starting with yesterday
 	const days = getDays(31, new Date(new Date().getTime() - (24 * 60 * 60 * 1000)));
 </script>
@@ -26,6 +11,7 @@
 		{#each days as day,i}
 			<Day dateObj="{day}" locales="no" index="{i}" />
 		{/each}
+		<button>+</button>
 	</div>
 </main>
 
