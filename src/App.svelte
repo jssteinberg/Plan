@@ -1,17 +1,10 @@
 <script>
-	import Day from './components/Day.svelte';
-	import {getListOfDays as getDays} from './utils.js';
-
-	// Get days, starting with yesterday
-	const days = getDays(31, new Date(new Date().getTime() - (24 * 60 * 60 * 1000)));
+	import Days from './components/DaysRecursive.svelte';
 </script>
 
 <main>
-	<div class="days-wrapper">
-		{#each days as day,i}
-			<Day dateObj="{day}" locales="no" index="{i}" />
-		{/each}
-		<button>+</button>
+	<div class="days color">
+		<Days locales="no" />
 	</div>
 </main>
 
@@ -55,12 +48,16 @@
 		min-height: 100vh;
 	}
 
-	.days-wrapper {
+	.days {
 		display: grid;
 		/* Use ch or ex for relative to font-family */
 		grid-template-columns: repeat(var(--cols, 1), 1fr);
 		position: relative;
 		z-index: 2;
+	}
+
+	.days :global(.day) {
+		height: 100%;
 	}
 
 	@media (min-width: 600px) { main { --cols: 3; } }

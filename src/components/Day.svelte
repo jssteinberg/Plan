@@ -1,80 +1,26 @@
-<script context="module">
-	import { writable } from 'svelte/store';
-	export const todayObj = writable(new Date);
-</script>
-
 <script>
-	import { isToday, getHue as getH } from '../utils.js';
-	export let dateObj;
-	export let locales = null;
-	export let index = 0;
+	export let isToday;
+	export let index;
+	export let day;
+	export let month;
 
-	/** @function initToday - Side effects! Is only run for Day that's today. */
-	const initToday = () => {
-		const getTime = (dateObj, locales) => {
-			const today = new Date();
-			if (!isToday(dateObj)) return undefined;
-			if (typeof locales === 'string' && locales.length)
-				return today.toLocaleTimeString(locales);
-			else
-				return today.toLocaleTimeString();
-		};
-
-		document.documentElement.style.setProperty('--h-today', getH(displayDate));
-		document.documentElement.style.setProperty('--h-month', hueMonth);
-
-		dayClasses += ' today';
-		time = getTime(dateObj, locales);
-
-		// tick tock clock
-		clock = setInterval(() => {
-			time = getTime(dateObj, locales);
-			if (typeof time === 'undefined') {
-				clearInterval(clock);
-				// dispatch event of day change, or something in module or store...
-				todayObj.set(new Date());
-				dayClasses = getDayClasses(dateObj, 0);
-			}
-		}, 1000);
-	};
 	/** @function getDayClasses - Get classes for Day.
 	 *  @param {Object} dateObj - JS Date object.
 	 *  @param {number} [index=0] - index for .display-day-
 	 *  @return {string} - string of classes. */
 	const getDayClasses = (dateObj, index = 0) => {
-		return `display-day-${index} day-${dateObj.getDay()} month-${dateObj.getMonth()}`;
+		return `day display-day-${index} day-${dateObj.getDay()} month-${dateObj.getMonth()}`;
 	};
 
-	const hueMonth = getH(dateObj.toLocaleDateString('en', {month:'long', year:'numeric'}));
-	let displayDate = dateObj.toLocaleDateString();
+	const hueMonth = getH(month);
 	let dayClasses = getDayClasses(dateObj, index);
-	let time;
-	let clock;
-
-	// if locales, update certain variables
-	if (locales) {
-		displayDate = dateObj.toLocaleDateString(locales, {
-			weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-		});
-	}
-
-	todayObj.subscribe(() => {
-		// if Day is today
-		if (isToday(dateObj)) {
-			initToday();
-		}
-	});
 </script>
 
-<section class="{dayClasses}" style="--h-day:{getH(displayDate)};--h-month:{hueMonth};--index-day:{index};">
-	<h2 class="text-h3">
-		{#each displayDate.split(' ') as word}
-			<span>{word}</span>
-		{/each}
-		{#if typeof time !== 'undefined'}
-			<span>{time}</span>
-		{/if}
-	</h2>
+<section
+	class="{dayClasses}"
+	style="--h-day:{getH(displayDate)};--h-month:{hueMonth};--index-day:{index};"
+	>
+	<slot></slot>
 </section>
 
 <style>
@@ -95,6 +41,9 @@
 		position: absolute;
 		top: 0; right: 0; bottom: 0; left: 0;
 		z-index: -1;
+	}
+
+	:global(.days.color) section:not(:is(.day-0,.day-6))::before {
 		/* BG unique day color shade */
 		background: hsla(var(--h-day),100%,62.5%,10%);
 	}
