@@ -52,6 +52,7 @@
 		display: grid;
 		/* Use ch or ex for relative to font-family */
 		grid-template-columns: repeat(var(--cols, 1), 1fr);
+		grid-auto-rows: minmax(calc(var(--space) * 5), auto);
 		position: relative;
 		z-index: 2;
 	}
