@@ -13,7 +13,7 @@
 	const getDateObjectFromIndex = (i = 0) => {
 		if (i === 0) return new Date(new Date().getTime() - (24 * 60 * 60 * 1000));
 		else if (i === 1) return new Date();
-		else return new Date(new Date().getTime() + ((i * 24) * 60 * 60 * 1000));
+		else return new Date(new Date().getTime() + (((i - 1) * 24) * 60 * 60 * 1000));
 	};
 	/** @function initToday - Side effects! Is only run for Day that's today. */
 	const initToday = () => {
